@@ -1,5 +1,6 @@
 {
   "provides": {
+    "Tipsy": "lib/Tipsy.pm6",
     "Routes": "lib/Routes.pm6"
   },
   "authors": [
@@ -21,7 +22,8 @@
   "meta-version": "0",
   "depends": [
     "Cro::HTTP",
-    "Cro::WebSocket"
+    "Cro::WebSocket",
+    "OO::Monitors"
   ],
   "name": "http",
   "build-depends": [
