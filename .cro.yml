@@ -1,0 +1,15 @@
+---
+"cro": 1
+"endpoints": 
+  - 
+    "host-env": "HTTP_HOST"
+    "id": "http"
+    "name": "HTTP"
+    "port-env": "HTTP_PORT"
+    "protocol": "http"
+"entrypoint": "service.p6"
+"env":  []
+"id": "http"
+"links":  []
+"name": "http"
+...

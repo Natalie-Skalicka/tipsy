@@ -1,0 +1,32 @@
+{
+  "provides": {
+    "Routes": "lib/Routes.pm6"
+  },
+  "authors": [
+    ""
+  ],
+  "auth": "Write me!",
+  "raku": null,
+  "support": {
+    "source": "Write me!"
+  },
+  "source-url": "Write me!",
+  "version": "0.0.1",
+  "test-depends": [
+  ],
+  "resources": [
+  ],
+  "description": "Write me!",
+  "license": "Write me!",
+  "meta-version": "0",
+  "depends": [
+    "Cro::HTTP",
+    "Cro::WebSocket"
+  ],
+  "name": "http",
+  "build-depends": [
+  ],
+  "tags": [
+    ""
+  ]
+}
