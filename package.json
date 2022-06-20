@@ -30,10 +30,13 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "babel-preset-react": "^6.24.1",
+    "jquery": "^3.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "redux-websocket-action": "^1.0.5"
   }
 }

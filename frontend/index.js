@@ -1,9 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
 import * as Actions from './actions';
 import { tipsyReducer } from './reducer';
+import thunkMiddleware from 'redux-thunk';
+import WSAction from 'redux-websocket-action';
+
+var Tip = props => (
+    <li>
+        {props.text} [<a href="#" onClick={() => props.onAgree(props.id)}>Agree</a>]
+        [<a href="#" onClick={() => props.onDisagree(props.id)}>Disagree</a>]
+    </li>
+);
 
 var SubmitTip = props => (
     <div>
@@ -17,10 +26,21 @@ var SubmitTip = props => (
     </div>
 );
 
-var LatestTips = () => (
+var LatestTips = props => (
     <div>
         <h2>Latest Tips</h2>
-        TODO
+        <ul>
+        {props.tips.map(t => <li key={t.id}>{t.text}</li>)}
+        </ul>
+    </div>
+);
+
+var TipList = props => (
+    <div>
+        <h2>{props.heading}</h2>
+        <ul>
+        {props.tips.map(t => <Tip key={t.id} {...props} {...t} />)}
+        </ul>
     </div>
 );
 
@@ -29,21 +49,36 @@ var App = props => (
         <SubmitTip tipText={props.tipText}
             onChangeTipText={props.onChangeTipText}
             onAddTip={props.onAddTip} />
-        <LatestTips />
+        <TipList heading="Latest Tips" tips={props.latestTips}
+            onAgree={props.onAgree} onDisagree={props.onDisagree} />
+        <TipList heading="Top Tips" tips={props.topTips}
+            onAgree={props.onAgree} onDisagree={props.onDisagree} />
     </div>
 );
 
 function mapProps(state) {
     return state;
 }
+
 function mapDispatch(dispatch) {
     return {
         onChangeTipText: text => dispatch(Actions.changeTipText(text)),
-        onAddTip: text => dispatch(Actions.addTip())
+        onAddTip: text => dispatch(Actions.addTip()),
+        onAgree: id => dispatch(Actions.agree(id)),
+        onDisagree: id => dispatch(Actions.disagree(id)),
     };
 }
 
-let store = createStore(tipsyReducer);
+['latest-tips', 'top-tips'].forEach(endpoint => {
+    let host = window.location.host;
+    let wsAction = new WSAction(store, 'ws://' + host + '/' + endpoint, {
+        retryCount:3,
+        reconnectInterval: 3
+    });
+    wsAction.start();
+});
+
+let store = createStore(tipsyReduce, applyMiddleware(thunkMiddleware));
 let ConnectedApp = connect(mapProps, mapDispatch)(App);
 render(
     <Provider store={store}>
