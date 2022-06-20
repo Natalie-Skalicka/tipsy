@@ -28,6 +28,4 @@ monitor Tipsy {
             .emit for @latest-existing;
         }
     }
-    
-    # The other unimplemented methods go here
 }
